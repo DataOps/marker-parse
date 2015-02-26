@@ -9,7 +9,7 @@
 	<script src="parser.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-		function parse() {
+		function parse(n) {
 			var text = document.getElementById("input").value;
 			var parsed = parser.parse(text)
 			var output = JSON.stringify(parsed, null, 4); 
@@ -18,7 +18,36 @@
 			document.getElementById("code").innerHTML = output;
 
         	var modData = [];
-        	var chartType = (parsed[1].value).toString()
+        	var chartType
+        	switch(n) {
+    			case 0:
+       			 chartType = (parsed[1].value).toString()
+        		break;
+    			case 1:
+       			chartType = 'bar'
+      			break;
+      			case 2:
+       			chartType = 'pie'
+      			break;
+      			case 3:
+       			chartType = 'line'
+      			break;
+      			case 4:
+       			chartType = 'area'
+      			break;
+      			case 5:
+       			chartType = 'area-spline'
+      			break;
+      			case 6:
+       			chartType = 'donut'
+      			break;
+      			case 7:
+       			chartType = 'scatter'
+      			break;
+    			default:
+        		chartType = 'bar'
+}
+
          	var labels
          	var parsedJson = parsed
 
@@ -28,7 +57,6 @@
                	item.push(d.value);
              	modData.push(item);
 			});
-
 
            	var chart = c3.generate({
             	data: {
@@ -50,7 +78,15 @@
 #data: 1,2,3
 #type: bar
 #color: red</textarea>
-				<input class="btn btn-default" style="margin-top:10px" type="submit" value="Compile" onclick="parse()"><br/><br/>
+				<input class="btn btn-default label-success" type="submit" value="PLOT" onclick="parse(0)">
+               <input class="btn btn-default" type="submit" value="SAVE SVG">
+               <input class="btn btn-default" type="submit" value="Bar" onclick="parse(1)">
+               <input class="btn btn-default" type="submit" value="Pie" onclick="parse(2)">
+               <input class="btn btn-default" type="submit" value="Line" onclick="parse(3)">
+               <input class="btn btn-default" type="submit" value="Area" onclick="parse(4)">
+               <input class="btn btn-default" type="submit" value="Area Spline" onclick="parse(5)">
+               <input class="btn btn-default" type="submit" value="Donut" onclick="parse(6)">
+               <input class="btn btn-default" type="submit" value="Scatter" onclick="parse(7)"><br/><br/>
 
 			<div id="chart" class="col-md-12 col-md-offset-0" style="height:500px;">
 					
