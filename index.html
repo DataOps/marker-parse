@@ -1,0 +1,44 @@
+<html>
+<head>
+	<link href="lib/c3.css" rel="stylesheet" type="text/css">
+	<link href="lib/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+	<script src="peg-0.8.0.min.js" type="text/javascript"></script>
+	<script src="parser.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		function parse() {
+			var text = document.getElementById("input").value;
+			//console.log(text);
+			var output = JSON.stringify(parser.parse(text), null, 4); 
+			console.log(output);
+
+			document.getElementById("tree").style.display = 'none';
+			document.getElementById("code").innerHTML = output;
+		}
+	</script>	
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1">
+				<h3>Chart code</h3>
+				<textarea id="input" name="input" class="form-control" rows="20"></textarea>
+				<input class="btn btn-default" style="margin-top:10px" type="submit" value="Compile" onclick="parse()">
+			</div>
+		
+			<div class="col-md-5 col-md-offset-0">
+				<h3>Tree</h3>
+				<p id="tree">Parse tree will appear here</p>
+				<pre id="code"></pre>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
+
+
+
+</head>
+<body>
