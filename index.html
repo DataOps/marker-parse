@@ -35,9 +35,7 @@
            	var chart = c3.generate({
             	data: {
              	json: modData, type: chartType,
-              color: {
-              pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
-    }
+              labels: true
              }
            });
 		}
@@ -52,7 +50,8 @@
 				<textarea id="input" name="input" class="form-control" rows="20">
 #data: 1,2,3
 #type: bar
-#color: red</textarea>
+#color: red
+#labels true</textarea>
 				<input class="btn btn-default label-success" type="submit" value="PLOT" onclick="parse(0)">
                <input class="btn btn-default" type="submit" value="SAVE SVG">
                <input class="btn btn-default" type="submit" value="Bar" onclick="parse(0)">
