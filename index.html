@@ -17,38 +17,62 @@
 			document.getElementById("tree").style.display = 'none';
 			document.getElementById("code").innerHTML = output;
 
-      var modData = [];
-      var chartType
-      var chartLabel 
-      if(parsed[3].value==="true"){
-        chartLabel = true
-      } else {
-        chartLabel = false
+      console.log("output: "+output);
+
+      var supportedCharts = ['bar','pie','line','area','area-spline','donut','scatter'];
+
+      var data = [];
+      var chartType = "";
+      var color = "0xFFFFFF";
+      var chartLabel = true
+
+      for(var i = 0; i < parsed.length; i++) {
+        if (parsed[i].type == "data") {
+          for(var j = 0; j < parsed[i].value.length; j++) {
+            if (parsed[i].value[i].type == "file") {
+              data = "";
+              data = parsed[i].value[0].value;
+              break;
+            } else if (parsed[i].value[i].type == ("int" || "string")) {
+              data[j] = parsed[i].value[j].value;              
+            }
+          }          
+        } else if (parsed[i].type == "type") {
+          if (supportedCharts.indexOf(parsed[i].value) != -1) {
+            chartType = parsed[i].value;
+          } else {
+            console.log("Unsupported chart type!");
+          }
+        } else if (parsed[i].type == "color") {
+          color = parsed[i].value;
+        } else if (parsed[i].type == "labels") {
+          chartLabel = (parsed[i].value == "true");
+        } else {
+          console.log("Unsupported parsing error");
+        }
       }
 
-      console.log(parsed['type'])
+      console.log("data: "+data);
+      console.log("type: "+chartType);
+      console.log("color: "+color);
+      console.log("chartLabel: "+chartLabel);
+      
 
-      var chartTypeArr = ['bar','pie','line','area','area-spline','donut','scatter']
+  //     var modData = [];
 
-      if(n==0){
-        chartType = parsed[1].value
-      } else {
-        chartType = chartTypeArr[n]
-      }
-
-      parsed[0].array.forEach(function(d, i) {
-        var item = [d.type];
-        item.push(d.value);
-        modData.push(item);
-			});
-           	var chart = c3.generate({
-            	data: {
-             	json: modData,
-              type: chartType,
-              labels: chartLabel
-             }
-           });
-		}
+  //     parsed[0].array.forEach(function(d, i) {
+  //       var item = [d.type];
+  //       item.push(d.value);
+  //       modData.push(item);
+		// 	});
+      var chart = c3.generate({
+        data: {
+          json: data,
+          type: chartType,
+          labels: chartLabel
+        }
+      });
+    }
 	</script>	
 </head>
 
@@ -61,16 +85,16 @@
 #data: 1,2,3
 #type: bar
 #color: red
-#labels true</textarea>
-				<input class="btn btn-default label-success" type="submit" value="PLOT" onclick="parse(0)">
-        <input class="btn btn-default" type="submit" value="SAVE SVG">
-        <input class="btn btn-default" type="submit" value="Bar" onclick="parse(0)">
+#labels: true</textarea>
+				<input class="btn btn-default" type="submit" value="Compile" onclick="parse(0)" style="margin-top:10px;">
+        <input class="btn btn-default" type="submit" value="SAVE SVG" style="margin-top:10px;">
+<!--         <input class="btn btn-default" type="submit" value="Bar" onclick="parse(0)">
         <input class="btn btn-default" type="submit" value="Pie" onclick="parse(1)">
         <input class="btn btn-default" type="submit" value="Line" onclick="parse(2)">
         <input class="btn btn-default" type="submit" value="Area" onclick="parse(3)">
         <input class="btn btn-default" type="submit" value="Area Spline" onclick="parse(4)">
         <input class="btn btn-default" type="submit" value="Donut" onclick="parse(5)">
-        <input class="btn btn-default" type="submit" value="Scatter" onclick="parse(6)"><br/><br/>
+        <input class="btn btn-default" type="submit" value="Scatter" onclick="parse(6)"><br/><br/> -->
 
         <div id="chart" class="col-md-12 col-md-offset-0" style="height:350px;"></div>
 			</div>
