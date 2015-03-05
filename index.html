@@ -9,13 +9,13 @@
 	<script src="lib/parser.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-		function parse(n) {
+		function parse() {
 			var text = document.getElementById("input").value;
 			var parsed = parser.parse(text)
 			var output = JSON.stringify(parsed, null, 4); 
 
-			document.getElementById("tree").style.display = 'none';
-			document.getElementById("code").innerHTML = output;
+			document.getElementById("chartText").style.display = 'none';
+			// document.getElementById("code").innerHTML = output;
 
       console.log("output: "+output);
 
@@ -56,6 +56,20 @@
       console.log("type: "+chartType);
       console.log("color: "+color);
       console.log("chartLabel: "+chartLabel);
+
+      // function includeCSSfile(href) {
+      //   var head_node = document.getElementsByTagName('head')[0];
+      //   var link_tag = document.createElement('link');
+      //   link_tag.setAttribute('rel', 'stylesheet');
+      //   link_tag.setAttribute('type', 'text/css');
+      //   link_tag.setAttribute('href', href);
+      //   head_node.appendChild(link_tag);
+      // }
+
+      if (typeof data == "string") {
+        // CSV
+        
+      }
       
 
   //     var modData = [];
@@ -86,7 +100,7 @@
 #type: bar
 #color: red
 #labels: true</textarea>
-				<input class="btn btn-default" type="submit" value="Compile" onclick="parse(0)" style="margin-top:10px;">
+				<input class="btn btn-default" type="submit" value="Compile" onclick="parse()" style="margin-top:10px;">
         <input class="btn btn-default" type="submit" value="SAVE SVG" style="margin-top:10px;">
 <!--         <input class="btn btn-default" type="submit" value="Bar" onclick="parse(0)">
         <input class="btn btn-default" type="submit" value="Pie" onclick="parse(1)">
@@ -96,15 +110,14 @@
         <input class="btn btn-default" type="submit" value="Donut" onclick="parse(5)">
         <input class="btn btn-default" type="submit" value="Scatter" onclick="parse(6)"><br/><br/> -->
 
-        <div id="chart" class="col-md-12 col-md-offset-0" style="height:350px;"></div>
+        <!-- <div id="chart" class="col-md-12 col-md-offset-0" style="height:350px;"></div> -->
 			</div>
 		
-			<div class="col-md-5 col-md-offset-0">
-				<h3>Tree</h3>
-				<p id="tree">Parse tree will appear here</p>
-				<pre id="code"></pre>
+			<div id="right" class="col-md-5 col-md-offset-0">
+				<h3>Chart</h3>
+				<p id="chartText">Chart will appear here</p>
+        <div id="chart"></div>
 			</div>
-
 		</div>
 	</div>
 </body>
