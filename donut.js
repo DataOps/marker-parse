@@ -4,7 +4,7 @@ function draw(file) {
   var radius = Math.min(width, height) / 2;
 
   var color = d3.scale.ordinal()
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      .range(colorbrewer.RdBu[3]);
 
   var arc = d3.svg.arc()
       .outerRadius(radius - 10)
@@ -21,8 +21,6 @@ function draw(file) {
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   d3.csv(file, function(error, data) {
-    console.log("HEJEHEJEHEJEHEJ");
-
     data.forEach(function(d) {
       d.population = +d.population;
     });
