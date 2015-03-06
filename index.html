@@ -133,11 +133,15 @@
     reader.readAsText(file);
     reader.onload = function () {
       var fileContent = this.result;
-      
+
       console.log(fileContent);
       var value = document.getElementById('input').value
       value = value.split("\n");
-      value[0] = "#data: " + fileName
+      for(var i = 0; i < value.length; i++) {
+        if(value[i].indexOf("#data") > -1) {
+          value[i] = "#data: " + fileName
+        }
+      }
       value = value.toString().replace(/\,/g,'\n')
       document.getElementById('input').value = value;
 
