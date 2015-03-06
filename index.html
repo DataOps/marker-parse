@@ -1,5 +1,17 @@
 <html>
 <head>
+  <style>
+            table {
+                border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+        </style>
 	<link href="lib/c3.css" rel="stylesheet" type="text/css">
 	<link href="lib/bootstrap.min.css" rel="stylesheet" type="text/css">
 
@@ -97,7 +109,7 @@
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1">
 				<h3>Chart code</h3>
-				<textarea id="input" name="input" class="form-control" rows="20">
+				<textarea id="input" name="input" class="form-control" rows="10">
 #data: 1,2,3
 #type: bar
 #color: red
@@ -121,8 +133,12 @@
 				<p id="chartText">Chart will appear here</p>
         <div id="chart"></div>
 			</div>
+              <div id="filedata" style="visibility:visible;"></div>
+
 		</div>
+    
 	</div>
+
   <script type="text/javascript">
     document.getElementById('fileUpl').onchange = function () {
     var file = this.files[0];
@@ -143,6 +159,21 @@
       }
       value = value.toString().replace(/\,/g,'\n')
       document.getElementById('input').value = value;
+
+               var data = fileContent;
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("#filedata")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
 
     };
   }
