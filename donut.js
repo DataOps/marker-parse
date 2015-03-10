@@ -4,7 +4,7 @@ function draw(file) {
   var radius = Math.min(width, height) / 2;
 
   var color = d3.scale.ordinal()
-      .range(colorbrewer.RdBu[3]);
+      .range(colorbrewer.RdBu[9]);
 
   var arc = d3.svg.arc()
       .outerRadius(radius - 10)
