@@ -144,6 +144,16 @@
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/marker");
+
+            editor.commands.addCommand({
+                name: 'myCommand',
+                bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+                exec: function(editor) {
+                    //console.log("ENTER PRESSED");
+                    parse();
+                },
+                readOnly: true // false if this command should not apply in readOnly mode
+            });            
         </script>
 
 				<input class="btn btn-default" type="submit" value="Compile" onclick="parse()" style="margin-top:10px;">
