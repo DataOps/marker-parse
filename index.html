@@ -46,10 +46,9 @@
     function parse() {
       //var text = document.getElementById("input").value;
       var text = editor.getValue();
-
       var parsed = parser.parse(text)
+      
       var output = JSON.stringify(parsed, null, 4); 
-
       document.getElementById("chartText").style.display = 'none';
       // document.getElementById("code").innerHTML = output;
 
@@ -181,7 +180,7 @@
         var fileContent = this.result;
 
         console.log(fileContent);
-        var value = document.getElementById('input').value
+        var value = editor.getValue();
         value = value.split("\n");
         for(var i = 0; i < value.length; i++) {
           if(value[i].indexOf("#data") > -1) {
@@ -189,7 +188,7 @@
           }
         }
         value = value.toString().replace(/\,/g,'\n')
-        document.getElementById('input').value = value;
+        editor.setValue(value, 1);
 
         var data = fileContent;
         var parsedCSV = d3.csv.parseRows(data);
@@ -207,8 +206,17 @@
       };
     }
 
-    //File read: http://stackoverflow.com/questions/13709482/how-to-read-text-file-in-javascript
   </script>
+
+
+<section class="container"></section>
+
+
+  <!-- Atoms -->
+  <script src="../marker-graphs/src/app.js"></script>
+  <script src="../marker-graphs/src/atoms/pie-chart/atom.js"></script>
+  <!-- Atoms -->
+
 
 </body>
 </html>
