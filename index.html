@@ -127,19 +127,6 @@
                     editor.setOptions({
                         enableBasicAutocompletion: true
                     });
-
-                    var codeSuggestion = {
-                        getCompletions: function(editor, session, pos, prefix, callback) {
-                            if (prefix.length === 0) {
-                                callback(null, []);
-                                return
-                            }
-
-                            
-                        }
-                    }
-
-                    langTools.addCompleter(codeSuggestion);
                     editor.setTheme("ace/theme/monokai");
                     editor.getSession().setMode("ace/mode/marker");
 
@@ -155,6 +142,35 @@
                         },
                         readOnly: true // false if this command should not apply in readOnly mode
                     });
+
+
+                    var codeSuggestion = {
+                        getCompletions: function(editor, session, pos, prefix, callback) {
+
+
+                            if (prefix.length === 0) {
+                                callback(null, []);
+                                return
+                            } else {
+
+
+                                $.getJSON("chartTypes.json", function(wordList) {
+                                    callback(null, wordList.map(function(ea) {
+                                        return {
+                                            name: ea.name,
+                                            value: ea.name,
+                                            meta: "chartType"
+                                        }
+                                    }));
+                                })
+
+                            }
+
+
+                        }
+                    }
+
+                    langTools.addCompleter(codeSuggestion);
                 </script>
 
                 <input class="btn btn-default" type="submit" value="Compile" onclick="parse()" style="margin-top:10px;">
