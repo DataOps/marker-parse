@@ -117,10 +117,17 @@
                 }
             }
 
+                        var atoms = Molecule.getAtoms();
+                        if(atoms[chartType]){
+                            drawChart(data, chartType);
+
+                        } else {
+                            console.log("ChartType not supported!")
+                        }
+
             //TODO: VERIFY THAT INSERTED DATA MATCHES ATOM
 
 
-            drawChart(data, chartType);
 
 
 
@@ -251,13 +258,7 @@
             }
 
             var dataContent = JSON.parse(JSON.stringify(dataArr))
-            console.log("Deden");
-            console.log(dataContent);
-
-
-
             var atoms = Molecule.getAtoms();
-
             var paper = d3.select('.container').append('svg')
                 .attr('width', 800)
                 .attr('height', 600);
@@ -275,4 +276,4 @@
     <!-- Atoms -->
 </body>
 
-</html>
+</html>222
