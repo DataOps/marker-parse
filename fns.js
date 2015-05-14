@@ -1,79 +1,4 @@
-<html>
-
-<head>
-    <style>
-        body {
-            overflow: hidden;
-        }
-        
-        table {
-            border-collapse: collapse;
-            border: 2px black solid;
-            font: 12px sans-serif;
-        }
-        
-        td {
-            border: 1px black solid;
-            padding: 5px;
-        }
-        
-        #editor {
-            margin: 0;
-            width: 90%;
-            height: 50%;
-        }
-        
-        .arc path {
-            stroke: #fff;
-        }
-    </style>
-    <link href="lib/c3.css" rel="stylesheet" type="text/css">
-    <link href="lib/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="lib/colorbrewer.css" rel="stylesheet" type="text/css">
-
-
-</head>
-
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <h3>Chart code</h3>
-                <pre id="editor">
-#data: 1,2,3,4,5,6,7,8,9,10,20,25,30,40,50
-#type: BarChart</pre>
-
-
-                <input class="btn btn-default" type="submit" value="Compile" onclick="parse()" style="margin-top:10px;">
-                <input class="btn btn-default" type="submit" value="SAVE SVG" style="margin-top:10px;">
-                <input class="btn btn-default" type="file" id="fileUpl" style="margin-top:10px;">
-            </div>
-
-            <div id="right" class="col-md-5 col-md-offset-0">
-                <h3>Chart</h3>
-                <p id="chartText">Chart will appear here</p>
-
-                <div class="container" id="container" style="width: 100%; height: 400px;"></div>
-            </div>
-            <div id="filedata" style="visibility:visible;"></div>
-        </div>
-    </div>
-
-    <script src="lib/d3.min.js" charset="utf-8"></script>
-    <script src="lib/c3.js" type="text/javascript"></script>
-    <script src="lib/peg-0.8.0.min.js" type="text/javascript"></script>
-    <script src="lib/parser.js" type="text/javascript"></script>
-    <script src="lib/jquery-1.11.2.min.js"></script>
-    <script src="lib/src/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/ext-language_tools.js"></script>
-    <script src="lib/colorbrewer.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="donut.js"></script>
-
-
-
-    <script type="text/javascript">
-        function parse() {
+function parse() {
 
             $('#container').empty();
             var text = editor.getValue();
@@ -125,11 +50,6 @@
                             console.log("ChartType not supported!")
                         }
 
-            //TODO: VERIFY THAT INSERTED DATA MATCHES ATOM
-
-
-
-
 
             // function includeCSSfile(href) {
             //   var head_node = document.getElementsByTagName('head')[0];
@@ -152,7 +72,9 @@
         var langTools = ace.require("ace/ext/language_tools");
         var editor = ace.edit("editor");
         editor.setOptions({
-            enableBasicAutocompletion: true
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
         });
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/marker");
@@ -164,7 +86,6 @@
                 mac: 'Command-Enter'
             },
             exec: function(editor) {
-                //console.log("ENTER PRESSED");
                 parse();
             },
             readOnly: true // false if this command should not apply in readOnly mode
@@ -173,7 +94,6 @@
 
         var codeSuggestion = {
             getCompletions: function(editor, session, pos, prefix, callback) {
-
 
                 if (prefix.length === 0) {
                     callback(null, []);
@@ -192,7 +112,6 @@
                     })
 
                 }
-
 
             }
         }
@@ -238,42 +157,3 @@
 
             };
         }
-    </script>
-
-
-    <!-- Atoms -->
-    <script src="../marker-graphs/src/app.js"></script>
-    <script src="../marker-graphs/src/atoms/pie-chart/atom.js"></script>
-    <script src="../marker-graphs/src/atoms/scatter-plot/atom.js"></script>
-    <script src="../marker-graphs/src/atoms/bar-chart/atom.js"></script>
-    <script type="text/javascript">
-        function drawChart(data, ct) {
-            console.log(data[0]);
-            var dataArr = new Array();
-
-            for (var i = 0; i < data.length; i++) {
-                var valObj = new Object();
-                valObj.value = data[i];
-                dataArr.push(valObj);
-            }
-
-            var dataContent = JSON.parse(JSON.stringify(dataArr))
-            var atoms = Molecule.getAtoms();
-            var paper = d3.select('.container').append('svg')
-                .attr('width', 800)
-                .attr('height', 600);
-
-
-            var a = atoms[ct];
-            a = a();
-
-            a.init(dataContent);
-
-            a.draw(paper);
-
-        };
-    </script>
-    <!-- Atoms -->
-</body>
-
-</html>
